@@ -53,4 +53,4 @@ The ATmega32 is widely used in embedded systems, DIY electronics, and educationa
 
 ---
 
-### What is Motion Planning ?
+### How does DIO works ?
