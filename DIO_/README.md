@@ -28,7 +28,7 @@ The **DIO (Direct I/O)** embedded session typically refers to an introductory se
 ### ATMEGA32 Overview 
 
 
-    ![1740337822195](image/README/1740337822195.png)
+   ![Image](https://github.com/user-attachments/assets/70d8850c-d1a3-48e9-a15d-95939f62d15b)
 
 
 The **ATmega32** is a microcontroller from Atmel (now part of Microchip Technology) that is part of the ATmega family. It is based on the  **AVR architecture** , which is known for its simplicity, performance, and low power consumption.
