@@ -107,7 +107,8 @@ The ATmega series microcontrollers (like ATmega32, ATmega328, ATmega2560, etc.) 
 ---
 
 # **`Software Architecture Overview`**
-
+![Image](https://github.com/user-attachments/assets/591ada46-4e85-451b-aa02-97f4593e80b1)
+ 
 The software architecture, particularly in embedded systems and automotive software development, can be broken down into several layers for abstraction, modularity, and maintainability. One common approach is to use a layered structure involving  **MCAL** ,  **HAL** ,  **APP** , and **Library** components. Let’s break down what each of these terms means:
 
 ### 1.  **MCAL (Microcontroller Abstraction Layer)** :
