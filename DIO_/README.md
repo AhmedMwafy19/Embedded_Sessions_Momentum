@@ -82,6 +82,7 @@ The ATmega series microcontrollers (like ATmega32, ATmega328, ATmega2560, etc.) 
 
 ### **Registers Involved in DIO Configuration:**
 ![Image](https://github.com/user-attachments/assets/65d2a248-4327-4fbc-9fb6-3efab63932ec)
+
 **Data Direction Register (DDR)** :
 
 * The **DDR** register controls the direction of each pin (input or output).
