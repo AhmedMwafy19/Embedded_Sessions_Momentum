@@ -89,19 +89,24 @@ The ATmega series microcontrollers (like ATmega32, ATmega328, ATmega2560, etc.) 
 * Example: `DDRx` where `x` represents the port (e.g., DDRB for Port B, DDRC for Port C, etc.).
 * If you set the bit to `1`, the corresponding pin is configured as  **output** ; if set to `0`, the pin is an  **input** .
 
-    **Example** : Setting Pin 2 on Port B as an output:
+  **Example** : Setting Pin 2 on Port B as an output:
 
  **PORT Register** :
 
 * The **PORT** register is used to write data to the pins when they are configured as outputs. For inputs, it can be used to enable internal pull-up resistors.
 * Example: `PORTx` where `x` represents the port (e.g., PORTB for Port B).
+* `<pre class="!overflow-visible" data-start="2729" data-end="2839"><div class="contain-inline-size rounded-md border-[0.5px] border-token-border-medium relative bg-token-sidebar-surface-primary dark:bg-gray-950">``<div class="overflow-y-auto p-4" dir="ltr"><code class="!whitespace-pre language-c">``<span>`PB2
+  `</code></div>``</div></pre>`
 
+---
 
-* <pre class="!overflow-visible" data-start="2729" data-end="2839"><div class="contain-inline-size rounded-md border-[0.5px] border-token-border-medium relative bg-token-sidebar-surface-primary dark:bg-gray-950"><div class="overflow-y-auto p-4" dir="ltr"><code class="!whitespace-pre language-c"><span>PB2
-  </span></code></div></div></pre>
-* **PIN Register** :
-* The **PIN** register is used to **read** the state of an input pin.
-* Example: `PINx` where `x` represents the port (e.g., PINB for Port B).
+## Pull up & down resistors
+
+|       Switch output signal       |  Switch On  |         Switch Off         |
+| :-------------------------------: | :----------: | :-------------------------: |
+|     With Pull-up resistance     |     LOW     |            HIGH            |
+|     With pull-down resistance     |     HIGH     |             LOW             |
+| Without any resistance connection | Input Signal | Floating "Very undesirable" |
 
 <pre class="!overflow-visible" data-start="2225" data-end="2282"><div class="contain-inline-size rounded-md border-[0.5px] border-token-border-medium relative bg-token-sidebar-surface-primary dark:bg-gray-950"></div></pre>
 
@@ -173,8 +178,6 @@ This layered approach separates concerns and increases modularity, portability, 
 
 ---
 
-
-
 The **MCAL (Microcontroller Abstraction Layer)** in AUTOSAR typically includes several files to manage different aspects of microcontroller hardware abstraction. These files help to separate the configuration, implementation, and interface details, providing a structured approach to handle low-level microcontroller operations. When it comes to organizing MCAL files, you may encounter the following types of files, which are part of the MCAL structure:
 
 ### 1. **reg**.h
@@ -226,8 +229,6 @@ The **MCAL (Microcontroller Abstraction Layer)** in AUTOSAR typically includes s
 # HAL Files
 
 It,s the same as MCAL without the register file obviously .
-
-
 
 ---
 
