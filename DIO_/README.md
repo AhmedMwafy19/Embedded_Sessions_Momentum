@@ -81,6 +81,7 @@ The ATmega series microcontrollers (like ATmega32, ATmega328, ATmega2560, etc.) 
 * The ATmega series allows for pin-change interrupts. This means that the microcontroller can trigger an interrupt when the state of a pin (configured as input) changes, which is useful for event-driven applications (e.g., detecting button presses).
 
 ### **Registers Involved in DIO Configuration:**
+
 ![Image](https://github.com/user-attachments/assets/65d2a248-4327-4fbc-9fb6-3efab63932ec)
 
 **Data Direction Register (DDR)** :
@@ -89,16 +90,15 @@ The ATmega series microcontrollers (like ATmega32, ATmega328, ATmega2560, etc.) 
 * Example: `DDRx` where `x` represents the port (e.g., DDRB for Port B, DDRC for Port C, etc.).
 * If you set the bit to `1`, the corresponding pin is configured as  **output** ; if set to `0`, the pin is an  **input** .
 
-  **Example** : Setting Pin 2 on Port B as an output:
-
- **PORT Register** :
+**PORT Register** :
 
 * The **PORT** register is used to write data to the pins when they are configured as outputs. For inputs, it can be used to enable internal pull-up resistors.
 * Example: `PORTx` where `x` represents the port (e.g., PORTB for Port B).
-* `<pre class="!overflow-visible" data-start="2729" data-end="2839"><div class="contain-inline-size rounded-md border-[0.5px] border-token-border-medium relative bg-token-sidebar-surface-primary dark:bg-gray-950">``<div class="overflow-y-auto p-4" dir="ltr"><code class="!whitespace-pre language-c">``<span>`PB2
-  `</code></div>``</div></pre>`
 
----
+**PIN Register** :
+
+* The **PIN** register is used to read data on the pins when they are configured as Inputs or even Outputs.
+* Example: `Pinx` where `x` represents the port (e.g., PinB for Port B).
 
 ## Pull up & down resistors
 
@@ -113,8 +113,9 @@ The ATmega series microcontrollers (like ATmega32, ATmega328, ATmega2560, etc.) 
 ---
 
 # **`Software Architecture Overview`**
+
 ![Image](https://github.com/user-attachments/assets/591ada46-4e85-451b-aa02-97f4593e80b1)
- 
+
 The software architecture, particularly in embedded systems and automotive software development, can be broken down into several layers for abstraction, modularity, and maintainability. One common approach is to use a layered structure involving  **MCAL** ,  **HAL** ,  **APP** , and **Library** components. Let’s break down what each of these terms means:
 
 ### 1.  **MCAL (Microcontroller Abstraction Layer)** :
