@@ -13,6 +13,8 @@
 
 #define Status				(TWSR & 0xF8)
 #define	Generate_Start		SET_BIT(TWCR,5)
+
+
 #define Polling_on_Event	while(!GET_BIT(TWCR,7))
 #define Enable_Ack_Bit		SET_BIT(TWCR,6)
 #define Disble_Ack_Bit		CLR_BIT(TWCR,6)
