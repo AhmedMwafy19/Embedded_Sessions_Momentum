@@ -11,22 +11,24 @@
 #include "avr/interrupt.h"
 
 
-#define Status				(TWCR & 0xF8)
-#define ENABLE_I2C			SET_BIT(TWCR, 2)
-#define START				SET_BIT(TWCR,5)
+#define Status				(TWSR & 0xF8)
+#define	Generate_Start		SET_BIT(TWCR,5)
 #define Polling_on_Event	while(!GET_BIT(TWCR,7))
 #define Enable_Ack_Bit		SET_BIT(TWCR,6)
-
 #define Disble_Ack_Bit		CLR_BIT(TWCR,6)
+#define ENABLE_I2C			SET_BIT(TWCR, 2)
+
+#define CLEAR_FLAG			SET_BIT(TWCR, 7)
+
 
 
 void I2C_INIT(unsigned int SCL_Speed, uint8 SLA_Address)
 {
 	// Set SDA Pin
-	DIO_u8SetPinDirection(DIO_u8PORTC, DIO_u8PIN0, DIO_u8PIN_OUTPUT);
+	DIO_u8SetPinDirection(DIO_u8PORTC, DIO_u8PIN0, DIO_u8PIN_INPUT);
 	DIO_u8SetPinValue(DIO_u8PORTC, DIO_u8PIN0, DIO_u8PINVALUE_LOW);
 	// Set SCL Pin
-	DIO_u8SetPinDirection(DIO_u8PORTC, DIO_u8PIN1, DIO_u8PIN_OUTPUT);	
+	DIO_u8SetPinDirection(DIO_u8PORTC, DIO_u8PIN1, DIO_u8PIN_INPUT);	
 	DIO_u8SetPinValue(DIO_u8PORTC, DIO_u8PIN1, DIO_u8PINVALUE_LOW);	
 	
 	// Init Clock Speed
@@ -44,54 +46,41 @@ void I2C_INIT(unsigned int SCL_Speed, uint8 SLA_Address)
 
 void I2C_Master_Write(uint8 DevAddress, uint8 *Data, uint8 Lenght, uint8 STOP_State, uint8 START_State)
 {
-	int x = 5;
-	START;
-	Polling_on_Event;
-	if (START_State == START && Status != START_Status) 
-	{
-		while(x == 5)
-		{
-			x++;	
-		}
-	}
-	else if (START_State == Repeated_START && Status != REP_START_Status) 	{
-		while(x == 5)
-		{
-			x++;
-		}
-	}	
-//	SET_BIT(TWCR,7);
-//	(((DevAddress & 0x7F) << 1) | 0); 
-	TWDR = 0x04; 
-	SET_BIT(TWCR,7);
-	Polling_on_Event;
-	if (Status != MT_SLA_ACK_Status) 
-	{
-		while(x == 5)
-		{
-			x++;
-		}
-	}  // Get Ack
 	
-	for (unsigned int Counter = 0; Counter < Lenght; Counter++)
+	
+	Generate_Start;
+	Polling_on_Event;
+	
+	if (START_State == START && Status != START_Status) while(1); // Get Ack
+	else if (START_State == Repeated_START && Status != REP_START_Status)  while(1); // Get Ack
+	// Transmit Slave Address with Command Write
+	TWDR = (((DevAddress & 0x7F) << 1) | 0);
+	
+	// Clearing Flag
+	CLEAR_FLAG;
+	
+	// Polling untill Slave Address sent
+	Polling_on_Event;
+	if (Status != MT_SLA_ACK_Status) while(1);  // Get Ack
+	// Write Data to DR
+	for (uint8_t Counter = 0 ; Counter < Lenght; Counter++)
 	{
 		TWDR = Data[Counter];
-		SET_BIT(TWCR,7);
+		CLEAR_FLAG;
 		Polling_on_Event;
-		if (Status != MT_DATA_ACK_Status){
-			while(x == 5)
-			{
-				x++;
-			}
-			}  // Get Ack
-		
+		if (Status != MT_DATA_ACK_Status) while(1);
 	}
-	SET_BIT(TWCR,7);
-	if (STOP_State = WITH_STOP)
+	
+	// Clear Flag
+	CLEAR_FLAG;
+	if (STOP_State == WITH_STOP)
 	{
-		SET_BIT(TWCR,4);
+		// Generate Stop Bit
+		SET_BIT(TWCR, STOP_TWSTO_BIT);
 	}
+
 }
+
 
 void I2C_Master_Read(uint8 DevAddress, uint8 *Data, uint8 Lenght, uint8 STOP_State, uint8 START_State)
 {
@@ -121,3 +110,5 @@ void I2C_Master_Read(uint8 DevAddress, uint8 *Data, uint8 Lenght, uint8 STOP_Sta
 	
 	SET_BIT(TWCR,4);
 }
+
+

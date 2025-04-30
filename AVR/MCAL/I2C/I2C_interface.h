@@ -15,6 +15,21 @@
 #include "../../Lib/STD_TYPES.h"
 
 
+// TWAR Bits
+#define TWGCE_BIT					0
+
+// TWCR Bits
+
+#define IRQ_EN_TWIE_BIT				0
+// Bit 1 Reserved
+#define EN_TWEN_BIT					2
+#define TWWC_BIT					3
+#define STOP_TWSTO_BIT				4
+#define START_TWSTA_BIT				5
+#define ACK_TWSEA_BIT				6
+#define IRQ_TWINT_BIT				7
+
+
 // Status
 #define START_Status				0x08
 #define REP_START_Status			0x10
